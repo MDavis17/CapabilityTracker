@@ -50,4 +50,15 @@ public class Version implements Serializable {
     public void setPatch(int patch) {
         this.patch = patch;
     }
+
+    public String toString() {
+        return Integer.toString(major)+"."+Integer.toString(minor)+"."+Integer.toString(patch);
+    }
+
+    public boolean equals(Version version) {
+        if(this.toString() == version.toString())
+            return true;
+        else
+            return false;
+    }
 }
