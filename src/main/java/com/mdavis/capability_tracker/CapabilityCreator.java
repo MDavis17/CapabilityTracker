@@ -2,13 +2,22 @@ package com.mdavis.capability_tracker;
 
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Vector;
 
 @Component
 public class CapabilityCreator {
 
-    public Capability[] genCapabilities(String[] versions, String[] themes) {
+    public String sendGet() throws IOException {
+        // api key
+        String key = "AIzaSyAbDCKElmErUrY8RIe5uzvqPfjbRwNsSQA";
+        URL url = new URL("https://sheets.googleapis.com/v4/spreadsheets/1S4K18Z7FaBo2aKm7Tfj6WrkB2nTklR51vK8lE11hYmQ?key="+key);
+        return "";
+    }
+
+    public Capability[] genCapabilities(String[] versions, String[] themes) throws IOException{
         Capability c1 = new Capability("AWS","1.2.1","Ops,Developer,Turnkey");
         Capability c2 = new Capability("K8s 1.10","1.1.0","Conformance");
         Capability c3 = new Capability("Azure","1.2.0","IaaS");
@@ -20,6 +29,10 @@ public class CapabilityCreator {
         Capability c9 = new Capability("Network Isolation","1.0.0","Security");
         Capability c10 = new Capability("Foo","1.0.1","Ops");
         Capability[] capabilities = new Capability[] {c1,c2,c3,c4,c5,c6,c7,c8,c9,c10};
+
+
+
+
 
         Vector<Capability> results = new Vector<Capability>();
 

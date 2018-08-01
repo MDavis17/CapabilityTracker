@@ -36,4 +36,15 @@ public class Capability {
         return valueThemes;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
+    }
+
+    public void setValueThemes(Vector valueThemes) {
+        this.valueThemes = valueThemes;
+    }
 }
