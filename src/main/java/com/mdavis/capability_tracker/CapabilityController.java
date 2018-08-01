@@ -37,7 +37,8 @@ public class CapabilityController {
      * If modifying these scopes, delete your previously saved credentials/ folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
-    private static final String CREDENTIALS_FILE_PATH = "credentials.json";
+//    private static final String CREDENTIALS_FILE_PATH ="/Users/mdavis17/Documents/Java/capability_tracker/src/main/resources/credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = "../../../../resources/credentials.json";
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
