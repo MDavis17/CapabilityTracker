@@ -15,9 +15,9 @@ public class Capability {
         this.valueThemes = new Vector();
     }
 
-    public Capability(String name,String version,String valueThemes) {
+    public Capability(String name,String version,String a_b,String valueThemes) {
         this.name = name;
-        this.version = new Version(version);
+        this.version = new Version(version+a_b);
         if (valueThemes.length() != 0)
             this.valueThemes = new Vector(Arrays.asList((valueThemes.replaceAll("\\s+","")).split(",",0)));
         else

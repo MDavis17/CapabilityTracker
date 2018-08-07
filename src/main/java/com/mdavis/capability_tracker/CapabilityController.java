@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,8 +35,7 @@ public class CapabilityController {
      * If modifying these scopes, delete your previously saved credentials/ folder.
      */
     private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
-//    private static final String CREDENTIALS_FILE_PATH ="/Users/mdavis17/Documents/Java/capability_tracker/src/main/resources/credentials.json";
-    private static final String CREDENTIALS_FILE_PATH = "../../../../resources/credentials.json";
+    private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
@@ -61,7 +58,7 @@ public class CapabilityController {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         final String spreadsheetId = "1S4K18Z7FaBo2aKm7Tfj6WrkB2nTklR51vK8lE11hYmQ";
-        final String range = "Sheet 1!A2:H31";
+        final String range = "Sheet1!A2:I31";
 
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -91,10 +88,14 @@ public class CapabilityController {
                         version_input = version_input.substring(0, 6);
                 }
             }
-            cap_new.setVersion(new Version(version_input));
+            // gather alpha_beta status
+            String a_b_status = "";
+            if(cap.get(6) != "")
+                a_b_status = cap.get(6).toString();
+            cap_new.setVersion(new Version(version_input+a_b_status));
 
             // set themes
-            String[] cap_themes = cap.get(7).toString().split(",\\s");
+            String[] cap_themes = cap.get(8).toString().split(",\\s");
             cap_new.setValueThemes(new Vector(Arrays.asList(cap_themes)));
 
             // add cap_new to list of capabilities
