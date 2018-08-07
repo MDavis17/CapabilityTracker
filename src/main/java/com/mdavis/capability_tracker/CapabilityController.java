@@ -80,7 +80,7 @@ public class CapabilityController {
             cap_new.setName(cap.get(CAP_NAME_INDEX).toString());
 
             // set version number
-            String version_input = "0.0.0";
+            String version_input = "-2.-2.-2";
             String num = "";
             for(Object ver_field: cap.subList(CAP_VERSION_START_INDEX,CAP_VERSION_END_INDEX+1)) {
                 if(ver_field.toString().length() != 0) {
@@ -88,10 +88,10 @@ public class CapabilityController {
 //                    num = version_input.split("\\s")[0];
 
                     //TODO: this needs to change
-                    if (version_input.length() < 4)
-                        version_input += ".0";
-                    else if (version_input.length() > 5)
-                        version_input = version_input.substring(0, 6);
+//                    if (version_input.length() < 4)
+//                        version_input += ".0";
+//                    else if (version_input.length() > 5)
+//                        version_input = version_input.substring(0, 6);
                 }
             }
             // gather alpha_beta status

@@ -1,6 +1,7 @@
 package com.mdavis.capability_tracker;
 
 import java.io.Serializable;
+import java.util.zip.Deflater;
 
 import static com.mdavis.capability_tracker.Utils.*;
 
@@ -28,8 +29,6 @@ public class Version implements Serializable {
         String[] v_split = version.split("\\.",0);
         this.major = Integer.parseInt(v_split[0]);
 
-        // check for ? in both minor and patch
-
         if(v_split[1].trim().equals("?"))
             this.minor = UNDETERMINED;
         else
@@ -49,6 +48,8 @@ public class Version implements Serializable {
 //            else
 //                this.patch = p;
         }
+        else
+            this.patch = DEFAULT;
 
     }
 
