@@ -3,6 +3,8 @@ package com.mdavis.capability_tracker;
 import java.util.Arrays;
 import java.util.Vector;
 
+import static com.mdavis.capability_tracker.Utils.*;
+
 public class Capability {
     private String name;
     private Version version;
@@ -17,7 +19,7 @@ public class Capability {
 
     public Capability(String name,String version,String a_b,String valueThemes) {
         this.name = name;
-        this.version = new Version(version+a_b);
+        this.version = new Version(version,getAlphaBetaStatus(a_b));
         if (valueThemes.length() != 0)
             this.valueThemes = new Vector(Arrays.asList((valueThemes.replaceAll("\\s+","")).split(",",0)));
         else

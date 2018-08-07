@@ -2,93 +2,93 @@ package com.mdavis.capability_tracker;
 
 import java.io.Serializable;
 
+import static com.mdavis.capability_tracker.Utils.*;
+
 public class Version implements Serializable {
-    private char major;
-    private char minor;
-    private char patch;
-    private char alpha_beta;
+    private int major;
+    private int minor;
+    private int patch;
+    private int alpha_beta;
 
     public Version() {
-        this.major = 0;
-        this.minor = 0;
-        this.patch = 0;
-        this.alpha_beta = '\0';
+        this.major = DEFAULT;
+        this.minor = DEFAULT;
+        this.patch = DEFAULT;
+        this.alpha_beta = DEFAULT;
     }
 
-    public Version(int major,int minor, int patch, char a_b) {
-        this.major = (char)major;
-        this.minor = (char)minor;
-        this.patch = (char)patch;
+    public Version(int major,int minor, int patch, int a_b) {
+        this.major = major;
+        this.minor = minor;
+        this.patch = patch;
         this.alpha_beta = a_b;
     }
 
-    public Version(String version) {
-        if(version.contains("alpha") || version.contains("Alpha")) {
-            this.alpha_beta = 'a';
-            version = version.substring(0,5);
-//            version.replace("alpha","");
-        }
-        else if(version.contains("beta") || version.contains("Beta")) {
-            this.alpha_beta = 'b';
-            version = version.substring(0,5);
-//            version.replace("beta","");
-        }
-
+    public Version(String version,int alpha_beta) {
         String[] v_split = version.split("\\.",0);
-//        this.major = Integer.parseInt(v_split[0]);
-//        this.minor = Integer.parseInt(v_split[1]);
-        this.major = v_split[0].trim().charAt(0);
-        this.minor = v_split[1].trim().charAt(0);
+        this.major = Integer.parseInt(v_split[0]);
+
+        // check for ? in both minor and patch
+
+        if(v_split[1].trim().equals("?"))
+            this.minor = UNDETERMINED;
+        else
+            this.minor = Integer.parseInt(v_split[1]);
+        this.alpha_beta = alpha_beta;
 
         if(v_split.length > 2) {
-//            this.patch = Integer.parseInt(v_split[2].trim());
-            char p = v_split[2].trim().charAt(0);
-            if(p == '?')
-                this.patch = 'x';
+            if(v_split[2].trim().equals("?"))
+                this.patch = UNDETERMINED;
             else
-                this.patch = p;
+                this.patch = Integer.parseInt(v_split[2].trim());
+
+//            this.patch = Integer.parseInt(v_split[2].trim());
+//            char p = v_split[2].trim().charAt(0);
+//            if(p == '?')
+//                this.patch = 'x';
+//            else
+//                this.patch = p;
         }
-//        String foo = Character.toString(major)+"."+Character.toString(minor)+"."+Character.toString(patch);
-//        foo.trim();
-//        this.alpha_beta = a_b;
+
     }
 
     // remember to check for '?' in minor and patch
     public int getMajor() {
-        return Character.getNumericValue(major);
+        return major;
     }
 
     public void setMajor(int major) {
-        this.major = (char)major;
+        this.major = major;
     }
 
     public int getMinor() {
-        return Character.getNumericValue(minor);
+        return minor;
     }
 
     public void setMinor(int minor) {
-        this.minor = (char)minor;
+        this.minor = minor;
     }
 
     public int getPatch() {
-        return Character.getNumericValue(patch);
+        return patch;
     }
 
     public void setPatch(int patch) {
-        this.patch = (char)patch;
+        this.patch = patch;
     }
 
-    public char getAlpha_beta() {
+    public int getAlpha_beta() {
         return alpha_beta;
     }
 
-    public void setAlpha_beta(char alpha_beta) {
+    public void setAlpha_beta(int alpha_beta) {
         this.alpha_beta = alpha_beta;
     }
 
+    //TODO think about adding alpha and beta into the test for equallity
     public String toString() {
-        return Character.toString(major)+"."+Character.toString(minor)+"."+Character.toString(patch);
-//        return Integer.toString(major)+"."+Integer.toString(minor)+"."+Integer.toString(patch);
+//        return Character.toString(major)+"."+Character.toString(minor)+"."+Character.toString(patch);
+        return Integer.toString(major)+"."+Integer.toString(minor)+"."+Integer.toString(patch);
     }
 
     public boolean equals(Version version) {

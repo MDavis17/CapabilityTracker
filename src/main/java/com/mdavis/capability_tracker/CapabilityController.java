@@ -24,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
+import static com.mdavis.capability_tracker.Utils.*;
+
 @RestController
 public class CapabilityController {
     private static final String APPLICATION_NAME = "CapabilityTracker";
@@ -75,13 +77,17 @@ public class CapabilityController {
             Capability cap_new = new Capability();
 
             // set name
-            cap_new.setName(cap.get(0).toString());
+            cap_new.setName(cap.get(CAP_NAME_INDEX).toString());
 
             // set version number
             String version_input = "0.0.0";
-            for(Object ver_field: cap.subList(1,6)) {
+            String num = "";
+            for(Object ver_field: cap.subList(CAP_VERSION_START_INDEX,CAP_VERSION_END_INDEX+1)) {
                 if(ver_field.toString().length() != 0) {
-                    version_input = ver_field.toString();
+                    version_input = ver_field.toString().split("\\s")[0];
+//                    num = version_input.split("\\s")[0];
+
+                    //TODO: this needs to change
                     if (version_input.length() < 4)
                         version_input += ".0";
                     else if (version_input.length() > 5)
@@ -90,12 +96,12 @@ public class CapabilityController {
             }
             // gather alpha_beta status
             String a_b_status = "";
-            if(cap.get(6) != "")
-                a_b_status = cap.get(6).toString();
-            cap_new.setVersion(new Version(version_input+a_b_status));
+            if(cap.get(CAP_A_B_INDEX) != "")
+                a_b_status = cap.get(CAP_A_B_INDEX).toString();
+            cap_new.setVersion(new Version(version_input,getAlphaBetaStatus(a_b_status)));
 
             // set themes
-            String[] cap_themes = cap.get(8).toString().split(",\\s");
+            String[] cap_themes = cap.get(CAP_THEME_INDEX).toString().split(",\\s");
             cap_new.setValueThemes(new Vector(Arrays.asList(cap_themes)));
 
             // add cap_new to list of capabilities
