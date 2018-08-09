@@ -21,4 +21,8 @@ public class Utils {
         else
             return DEFAULT;
     }
+
+//    public static Capability[] thin_capabilities_list(Version[] versions, String[] themes) {
+//
+//    }
 }

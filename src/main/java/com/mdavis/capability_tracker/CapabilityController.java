@@ -81,17 +81,9 @@ public class CapabilityController {
 
             // set version number
             String version_input = "-2.-2.-2";
-            String num = "";
             for(Object ver_field: cap.subList(CAP_VERSION_START_INDEX,CAP_VERSION_END_INDEX+1)) {
                 if(ver_field.toString().length() != 0) {
                     version_input = ver_field.toString().split("\\s")[0];
-//                    num = version_input.split("\\s")[0];
-
-                    //TODO: this needs to change
-//                    if (version_input.length() < 4)
-//                        version_input += ".0";
-//                    else if (version_input.length() > 5)
-//                        version_input = version_input.substring(0, 6);
                 }
             }
             // gather alpha_beta status
@@ -108,7 +100,35 @@ public class CapabilityController {
             capabilities.add(cap_new);
         }
 
-        return capabilities.toArray(new Capability[capabilities.size()]);
+        //thinning capabilities with inputs
+//        Version[] version_args = new Version[versions.length];
+        Vector<String> version_args = new Vector<>();
+        for(int i = 0; i < versions.length; i++) {
+            //TODO: figure out what to do about using alpha beta in the inputs. fix the DEFAULT in this call.
+//            version_args[i] = new Version(versions[i],DEFAULT);
+            version_args.add(new Version(versions[i],DEFAULT).toString());
+        }
+        Vector<Capability> final_caps = new Vector<Capability>();
+        for(Capability c: capabilities) {
+            Version c_v = c.getVersion();
+            Vector<String> c_themes = c.getValueThemes();
+//            boolean version_match = false;
+//            for(Version v: version_args) {
+//
+//            }
+
+//            if(versions.length == 0 || Arrays.asList(version_args).contains(c_v)) {
+//                if(themes.length == 0 || c_themes.containsAll(Arrays.asList(themes)))
+//                    final_caps.add(c);
+//            }
+//            boolean foo = version_args.contains(c_v.toString());
+            if(versions.length == 0 || version_args.contains(c_v.toString())) {
+                if(themes.length == 0 || c_themes.containsAll(Arrays.asList(themes)))
+                    final_caps.add(c);
+            }
+        }
+        return final_caps.toArray(new Capability[capabilities.size()]);
+//        return capabilities.toArray(new Capability[capabilities.size()]);
 
 //        return (new CapabilityCreator()).genCapabilities(versions,themes);
     }

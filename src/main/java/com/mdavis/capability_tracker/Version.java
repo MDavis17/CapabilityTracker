@@ -93,7 +93,7 @@ public class Version implements Serializable {
     }
 
     public boolean equals(Version version) {
-        if(this.toString() == version.toString())
+        if(this.toString() == version.toString() && this.alpha_beta == version.alpha_beta)
             return true;
         else
             return false;
